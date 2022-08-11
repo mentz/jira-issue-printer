@@ -9,6 +9,7 @@ from jira import JIRA
 load_dotenv()
 
 PRINTING_EXECUTABLE = os.getenv('PRINTING_EXECUTABLE')
+PRINTING_ARGUMENTS = os.getenv('PRINTING_ARGUMENTS')
 PAGE_WIDTH = int(os.getenv('PAGE_WIDTH', 70))
 PAGE_HEIGHT = int(os.getenv('PAGE_HEIGHT', 30))
 JIRA_USERNAME = os.getenv('JIRA_USERNAME')
@@ -66,8 +67,12 @@ def prepare_text_for_print(issue):
     return padded_text
 
 def print_text(text):
+    cmd_list = [PRINTING_EXECUTABLE]
+    if PRINTING_ARGUMENTS:
+        cmd_list += PRINTING_ARGUMENTS.split()
+
     process = subprocess.run(
-        PRINTING_EXECUTABLE,
+        cmd_list,
         stdout=subprocess.DEVNULL,
         input=text,
         encoding='ascii'
