@@ -1,2 +1,3 @@
 .env
 issues.json
+__pycache__/
