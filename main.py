@@ -5,7 +5,6 @@ import textwrap
 import lib.config as cfg
 from lib.jiralist import JiraList
 
-
 def prepare_text_for_print(issue):
     header = "~~~ TASK ENTERED SPRINT ~~~".center(cfg.PAGE_WIDTH)
     task = textwrap.fill(f"{issue.key} {issue.fields.summary}", width=cfg.PAGE_WIDTH)
@@ -21,8 +20,12 @@ def prepare_text_for_print(issue):
     return padded_text
 
 def print_text(text):
+    cmd_list = [cfg.PRINTING_EXECUTABLE]
+    if cfg.PRINTING_ARGUMENTS:
+        cmd_list += cfg.PRINTING_ARGUMENTS.split()
+
     process = subprocess.run(
-        cfg.PRINTING_EXECUTABLE,
+        cmd_list,
         stdout=subprocess.DEVNULL,
         input=text,
         encoding='ascii'
