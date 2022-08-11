@@ -84,7 +84,7 @@ def filter_issues_with_new_pull_requests(issues):
 
     for issue in issues:
         if get_issue_has_open_pr(issue):
-            list_issue_on_previous_state = filter(lambda x: x['key'] == issue.key and x['has_open_pr'], previous_state)[:1]
+            list_issue_on_previous_state = list(filter(lambda x: x['key'] == issue.key and x['has_open_pr'], previous_state))[:1]
 
             if len(list_issue_on_previous_state) == 0:
                 issues_with_new_open_pr += [issue]
@@ -159,7 +159,7 @@ if __name__ == "__main__":
     if len(issues_with_new_prs):
         list_of_issue_keys = ", ".join([issue.key for issue in issues_with_new_prs])
         print(f"Some issues have new open PRs: {list_of_issue_keys}.")
-        print_issues(new_issues, prepare_text_for_issues_with_new_prs)
+        print_issues(issues_with_new_prs, prepare_text_for_issues_with_new_prs)
     else:
         print("No issues have new PRs.")
 
