@@ -57,7 +57,7 @@ def print_issues(issues, text_generator):
         print_text(text)
 
 if __name__ == "__main__":
-    jira = JiraList(cfg.JIRA_SERVER_URL, cfg.JIRA_USERNAME, cfg.JIRA_API_TOKEN, cfg.JSON_FILE, cfg.CLEAN_DATA)
+    jira = JiraList(cfg.JIRA_SERVER_URL, cfg.JIRA_USERNAME, cfg.JIRA_API_TOKEN, cfg.JIRA_PROJECT_PREFIX, cfg.JSON_FILE, cfg.CLEAN_DATA)
     issues = jira.get_issues(cfg.JIRA_BOARD_ID)
 
     new_issues = jira.filter_new_issues(issues)
